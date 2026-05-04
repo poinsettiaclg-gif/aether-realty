@@ -1,9 +1,12 @@
 import uvicorn
 import os
+import re
 import time
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 from pydantic import BaseModel, Field
 from qualifier_agent import RealtorQualifierAgent
 from database import (
@@ -24,6 +27,7 @@ except ImportError:
 # Per-session state: each user gets their own agent + conversation history
 sessions: dict[str, dict] = {}
 SESSION_TTL = 3600  # 1 hour timeout for idle sessions
+_request_counter = 0  # Throttle session cleanup to every 50 requests
 
 def get_or_create_session(session_id: str) -> dict:
     """Get existing session or create a new one."""
@@ -63,11 +67,37 @@ def check_rate_limit(client_ip: str) -> bool:
     rate_limit_store[client_ip].append(now)
     return True
 
+# ─── Security ─────────────────────────────────────────────────────────────────
+ADMIN_API_KEY = os.environ.get("ADMIN_API_KEY", "")
+
+def require_admin_key(req: Request):
+    """Dependency that checks for a valid admin API key on sensitive endpoints."""
+    if not ADMIN_API_KEY:
+        raise HTTPException(status_code=503, detail="Admin access not configured.")
+    provided = req.headers.get("X-API-Key", "")
+    if provided != ADMIN_API_KEY:
+        raise HTTPException(status_code=401, detail="Unauthorized.")
+
+def sanitize_message(text: str) -> str:
+    """Strip HTML tags and limit length to prevent injection."""
+    cleaned = re.sub(r'<[^>]+>', '', text)
+    return cleaned.strip()[:2000]
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """Add security headers to all responses."""
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        return response
+
 # ─── App Setup ────────────────────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Modern lifespan handler replacing deprecated @app.on_event."""
-    print("AETHER Realtor Prototype Server starting...")
+    print("Lake Region Realty server starting...")
     # Initialize database
     init_db()
     # Validate that we can create an agent (checks imports, API key, etc.)
@@ -83,7 +113,10 @@ async def lifespan(app: FastAPI):
     sessions.clear()
     print("Server shutdown complete. Sessions cleared.")
 
-app = FastAPI(title="Lake Region Realtor Agent API", lifespan=lifespan)
+app = FastAPI(title="Lake Region Realtor API", lifespan=lifespan)
+
+# Security headers on all responses
+app.add_middleware(SecurityHeadersMiddleware)
 
 # Setup CORS — restricted to known origins
 ALLOWED_ORIGINS = [
@@ -94,8 +127,8 @@ ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:3000",
 ]
-# Allow file:// protocol and any origin for dev mode
-if os.environ.get("AETHER_DEV_MODE", "true").lower() == "true":
+# Allow wildcard CORS only when explicitly opted in via DEV_MODE=true
+if os.environ.get("DEV_MODE", "false").lower() == "true":
     ALLOWED_ORIGINS.append("*")
 
 # Add production frontend URL if set
@@ -129,8 +162,11 @@ async def chat_endpoint(request: ChatRequest, req: Request):
     if not check_rate_limit(client_ip):
         raise HTTPException(status_code=429, detail="Too many requests. Please slow down.")
 
-    # Cleanup stale sessions periodically
-    cleanup_stale_sessions()
+    # Cleanup stale sessions periodically (every 50 requests, not every request)
+    global _request_counter
+    _request_counter += 1
+    if _request_counter % 50 == 0:
+        cleanup_stale_sessions()
 
     try:
         # Get or create session
@@ -139,7 +175,7 @@ async def chat_endpoint(request: ChatRequest, req: Request):
 
         # Build the task input dict that execute() expects
         task_input = {
-            "message": request.message,
+            "message": sanitize_message(request.message),
             "history": session["history"]
         }
 
@@ -183,7 +219,7 @@ async def chat_endpoint(request: ChatRequest, req: Request):
         import traceback
         traceback.print_exc()
         return ChatResponse(
-            reply="I apologize for the hiccup. Could you try that again?",
+            reply="Sorry about that — could you try again?",
             extracted_data={},
             is_qualified=False
         )
@@ -205,21 +241,21 @@ async def health_check():
         **stats
     }
 
-@app.get("/leads")
+@app.get("/leads", dependencies=[Depends(require_admin_key)])
 async def list_leads(qualified_only: bool = False):
-    """Get all leads (for future dashboard)."""
+    """Get all leads (requires admin API key)."""
     if qualified_only:
         leads = get_all_qualified_leads()
     else:
         leads = get_all_leads()
     return {"leads": leads, "count": len(leads)}
 
-@app.get("/leads/stats")
+@app.get("/leads/stats", dependencies=[Depends(require_admin_key)])
 async def lead_stats():
-    """Get funnel stats."""
+    """Get funnel stats (requires admin API key)."""
     return get_lead_stats()
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    print(f"Starting AETHER Realtor Server on port {port}...")
+    print(f"Starting Lake Region Realty server on port {port}...")
     uvicorn.run("server:app", host="127.0.0.1", port=port, reload=True)

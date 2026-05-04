@@ -25,10 +25,11 @@ class BaseAgent(ABC):
         """Initialize a Gemini client using API key from environment."""
         api_key = os.environ.get("GEMINI_API_KEY", "")
         if not api_key:
-            raise ValueError(
+            logger.error(
                 "GEMINI_API_KEY environment variable not set. "
                 "Get one at https://aistudio.google.com/apikey"
             )
+            raise ValueError("AI service is not configured. Please contact support.")
         client = genai.Client(api_key=api_key)
         return client
 

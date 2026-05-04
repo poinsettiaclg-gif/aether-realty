@@ -62,7 +62,7 @@ Agent Reply:"""
         # 1. Generate Conversational Reply
         try:
             response = client.models.generate_content(
-                model='gemini-2.5-pro',
+                model='gemini-1.5-pro',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     system_instruction=self._compiled_prompt,
@@ -96,7 +96,7 @@ Return a raw JSON object matching this schema exactly:
         extracted_data = {}
         try:
             extract_response = client.models.generate_content(
-                model='gemini-2.5-flash', # use flash for fast extraction
+                model='gemini-1.5-flash', # use flash for fast extraction
                 contents=extraction_prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",

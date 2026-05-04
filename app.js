@@ -22,9 +22,9 @@ const API_URL = (() => {
     const scriptTag = document.querySelector('script[data-api-url]');
     if (scriptTag) return scriptTag.getAttribute('data-api-url');
     // If opened as a local file, use localhost
-    if (window.location.protocol === 'file:') return 'http://127.0.0.1:8000';
+    if (window.location.protocol === 'file:' || window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') return 'http://127.0.0.1:8000';
     // In production, the API is on the same origin or a configured backend
-    return window.AETHER_API_URL || 'http://127.0.0.1:8000';
+    return window.AETHER_API_URL || 'https://f805308ca6a6a3.lhr.life';
 })();
 
 // ─── Chat Functions ──────────────────────────────────────────────────────────
@@ -167,7 +167,7 @@ async function sendMessage() {
 async function resetConversation() {
     // Reset the UI
     chatMessages.innerHTML = '';
-    addMessage("Hi there! I'm the automated assistant for AETHER Realty in the Lake Region. Are you looking to buy or sell a property?");
+    addMessage("Hi there! Welcome to Lake Region Realty. I'm here to help you get started — are you looking to buy or sell a property?");
     resetLeadCard();
     
     // Reset the server session

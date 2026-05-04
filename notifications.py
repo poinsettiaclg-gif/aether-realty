@@ -4,6 +4,7 @@ Supports SendGrid (recommended) with SMTP fallback.
 """
 import os
 import smtplib
+from html import escape as html_escape
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
@@ -17,7 +18,7 @@ SMTP_PASS = os.environ.get("SMTP_PASS", "")
 
 REALTOR_EMAIL = os.environ.get("REALTOR_EMAIL", "")
 REALTOR_NAME = os.environ.get("REALTOR_NAME", "Realtor")
-FROM_EMAIL = os.environ.get("FROM_EMAIL", "leads@aether-realty.com")
+FROM_EMAIL = os.environ.get("FROM_EMAIL", "leads@lakeregionrealty.com")
 
 
 def send_qualified_lead_notification(lead_data: dict, transcript: str) -> bool:
@@ -37,10 +38,13 @@ def send_qualified_lead_notification(lead_data: dict, transcript: str) -> bool:
 
     subject = f"🔥 New Qualified Lead — {intent.title()}, {budget}, {timeline}"
 
+    # Escape transcript to prevent XSS in HTML email
+    safe_transcript = html_escape(transcript)
+
     html_body = f"""
     <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0c; color: #ffffff; padding: 30px; border-radius: 16px;">
         <h1 style="color: #648cff; margin-bottom: 5px;">New Qualified Lead</h1>
-        <p style="color: #a0a0b0; margin-top: 0;">Captured by your AETHER AI Agent • {datetime.now().strftime('%B %d, %Y at %I:%M %p')}</p>
+        <p style="color: #a0a0b0; margin-top: 0;">Captured {datetime.now().strftime('%B %d, %Y at %I:%M %p')}</p>
 
         <div style="background: #121216; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin: 20px 0;">
             <table style="width: 100%; border-collapse: collapse;">
@@ -65,11 +69,11 @@ def send_qualified_lead_notification(lead_data: dict, transcript: str) -> bool:
 
         <div style="background: #121216; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin: 20px 0;">
             <h3 style="color: #a0a0b0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-top: 0;">Conversation Transcript</h3>
-            <pre style="color: #d0d0d0; font-size: 13px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">{transcript}</pre>
+            <pre style="color: #d0d0d0; font-size: 13px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">{safe_transcript}</pre>
         </div>
 
         <p style="color: #a0a0b0; font-size: 12px; text-align: center; margin-top: 30px;">
-            Powered by AETHER Logic Engine • <a href="https://aether-realty.com" style="color: #648cff;">aether-realty.com</a>
+            Lake Region Realty • Russell Roseberry • (352) 549-5376
         </p>
     </div>
     """
@@ -85,7 +89,7 @@ Contact: {contact}
 --- CONVERSATION TRANSCRIPT ---
 {transcript}
 
-Powered by AETHER Logic Engine
+Lake Region Realty • Russell Roseberry • (352) 549-5376
 """
 
     # Try SendGrid first, then SMTP fallback
@@ -106,7 +110,7 @@ def _send_via_sendgrid(subject: str, html_body: str, plain_body: str) -> bool:
         from sendgrid.helpers.mail import Mail, Email, To, Content
 
         message = Mail(
-            from_email=Email(FROM_EMAIL, "AETHER Realty Agent"),
+            from_email=Email(FROM_EMAIL, "Lake Region Realty"),
             to_emails=To(REALTOR_EMAIL, REALTOR_NAME),
             subject=subject,
         )

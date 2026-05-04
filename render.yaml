@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: aether-realty-api
+    name: lake-region-realty-api
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
@@ -8,11 +8,13 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         sync: false
-      - key: AETHER_DEV_MODE
+      - key: DEV_MODE
         value: false
       - key: FRONTEND_URL
-        value: https://aether-realty-demo.netlify.app
+        value: https://lakeregionrealty.com
       - key: REALTOR_EMAIL
         sync: false
       - key: SENDGRID_API_KEY
+        sync: false
+      - key: ADMIN_API_KEY
         sync: false

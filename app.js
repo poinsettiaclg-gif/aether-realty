@@ -24,7 +24,7 @@ const API_URL = (() => {
     // If opened as a local file, use localhost
     if (window.location.protocol === 'file:' || window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') return 'http://127.0.0.1:8000';
     // In production, the API is on the same origin or a configured backend
-    return window.AETHER_API_URL || 'https://lake-region-realty-api.onrender.com';
+    return window.AETHER_API_URL || 'https://47086247c49e59.lhr.life';
 })();
 
 // ─── Chat Functions ──────────────────────────────────────────────────────────

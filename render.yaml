@@ -11,7 +11,7 @@ services:
       - key: DEV_MODE
         value: false
       - key: FRONTEND_URL
-        value: https://lakeregionrealty.com
+        value: https://aether-realty-demo.netlify.app
       - key: REALTOR_EMAIL
         sync: false
       - key: SENDGRID_API_KEY

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lake Region Real Estate Agent | AEGIS Qualifier</title>
+    <meta name="description" content="Automate your real estate lead qualification with AETHER-powered AI agents designed specifically for the Keystone Heights & Lake Region market.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-mesh"></div>
+    <nav>
+        <div class="logo">AETHER <span>Realty</span></div>
+        <a href="#demo" class="btn-secondary">Try the Demo</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Stop Wasting Time on Unqualified Leads.</h1>
+            <p>Deploy a 24/7 AI Real Estate Assistant that speaks to your buyers, checks their budget, and only sends you the hot leads. Built specifically for the Lake Region market.</p>
+            <div class="hero-actions">
+                <a href="#demo" class="btn-primary">Test the Agent Now</a>
+            </div>
+            <div class="social-proof">
+                <p>Powered by <strong>AETHER Logic Engine</strong></p>
+            </div>
+        </div>
+    </header>
+
+    <!-- How It Works -->
+    <section class="features-section" id="features">
+        <div class="features-header">
+            <h2>How It Works</h2>
+            <p>Your AI agent qualifies every lead — automatically, 24/7, while you focus on closing.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <h3>1. Lead Engages</h3>
+                <p>A potential buyer visits your site or texts your number. The AI agent greets them instantly — no wait time, no missed leads.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <h3>2. Agent Qualifies</h3>
+                <p>Through natural conversation, it extracts intent, timeline, budget, and contact info — all without sounding like a form.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <h3>3. You Get Hot Leads</h3>
+                <p>Only qualified leads hit your inbox — with full context on what they want, when they want it, and how much they can spend.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points -->
+    <section class="pain-section">
+        <div class="pain-grid">
+            <div class="pain-card">
+                <div class="pain-stat">20+</div>
+                <p>Hours per week spent on unqualified leads</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-stat">67%</div>
+                <p>Of online leads never get a follow-up call</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-stat">24/7</div>
+                <p>Your AI agent never sleeps, never misses a lead</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo -->
+    <section id="demo" class="demo-section">
+        <div class="demo-header">
+            <h2>Live Prototype</h2>
+            <p>Try it as a potential buyer looking for a lakefront property in Keystone Heights.</p>
+        </div>
+        
+        <div class="demo-layout">
+            <!-- Chat Widget -->
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="agent-avatar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <div class="agent-info">
+                        <h3>Lake Region Assistant</h3>
+                        <span class="status" id="agent-status">Online & Ready</span>
+                    </div>
+                    <button class="reset-btn" id="reset-btn" title="New Conversation">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                    </button>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message agent-message">
+                        <p>Hi there! I'm the automated assistant for AETHER Realty in the Lake Region. Are you looking to buy or sell a property?</p>
+                    </div>
+                </div>
+                
+                <div class="typing-indicator hidden" id="typing-indicator">
+                    <span></span><span></span><span></span>
+                </div>
+                
+                <div class="chat-input-container">
+                    <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
+                    <button id="send-btn" aria-label="Send Message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lead Card -->
+            <div class="lead-card" id="lead-card">
+                <div class="lead-card-header">
+                    <h3>Lead Qualification Card</h3>
+                    <span class="lead-badge" id="lead-badge">Gathering...</span>
+                </div>
+                <div class="lead-card-body">
+                    <div class="lead-field">
+                        <label>Intent</label>
+                        <span class="lead-value" id="lead-intent">—</span>
+                    </div>
+                    <div class="lead-field">
+                        <label>Timeline</label>
+                        <span class="lead-value" id="lead-timeline">—</span>
+                    </div>
+                    <div class="lead-field">
+                        <label>Budget</label>
+                        <span class="lead-value" id="lead-budget">—</span>
+                    </div>
+                    <div class="lead-field">
+                        <label>Contact</label>
+                        <span class="lead-value" id="lead-contact">—</span>
+                    </div>
+                </div>
+                <div class="lead-card-footer">
+                    <div class="progress-bar-container">
+                        <div class="progress-label">Qualification Progress</div>
+                        <div class="lead-progress">
+                            <div class="lead-progress-fill" id="lead-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lead-card-note">
+                    <p>This is what <strong>you</strong> see as the realtor. Your lead sees only the chat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Qualify Leads on Autopilot?</h2>
+            <p>Get a custom AI agent built for your brokerage. Pay only for qualified leads.</p>
+            <a href="mailto:contact@aether.systems?subject=Lake Region AI Agent" class="btn-primary">Get Started — Free Pilot</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Antigravity | AETHER Logic Systems</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER Realty — AI Lead Qualifier for Lake Region Realtors</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0c;
+            color: #ffffff;
+            width: 8.5in;
+            min-height: 11in;
+            padding: 60px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+        .logo { font-size: 24px; font-weight: 800; }
+        .logo span { font-weight: 300; color: #a0a0b0; }
+        .tagline {
+            font-size: 12px;
+            color: #648cff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, #FFFFFF, #a0a0b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #a0a0b0;
+            line-height: 1.6;
+            margin-bottom: 48px;
+            max-width: 480px;
+        }
+
+        /* Pain Stats */
+        .stats-row {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 48px;
+            padding: 30px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+        }
+        .stat { text-align: center; flex: 1; }
+        .stat-num {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #648cff, #9c64ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label { font-size: 12px; color: #a0a0b0; margin-top: 4px; }
+
+        /* How It Works */
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #648cff;
+            margin-bottom: 20px;
+        }
+        .steps {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 48px;
+        }
+        .step {
+            flex: 1;
+            padding: 24px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+        }
+        .step-num {
+            font-size: 28px;
+            font-weight: 800;
+            color: #648cff;
+            margin-bottom: 8px;
+        }
+        .step h3 { font-size: 14px; margin-bottom: 6px; }
+        .step p { font-size: 12px; color: #a0a0b0; line-height: 1.5; }
+
+        /* Lead Card Preview */
+        .lead-preview {
+            padding: 24px;
+            background: rgba(100,140,255,0.04);
+            border: 1px solid rgba(100,140,255,0.15);
+            border-radius: 16px;
+            margin-bottom: 48px;
+        }
+        .lead-preview h3 {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .lead-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 13px;
+        }
+        .lead-row:last-child { border: none; }
+        .lead-label { color: #a0a0b0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .lead-val { font-weight: 600; }
+        .lead-val.highlight { color: #4ade80; }
+
+        /* CTA */
+        .cta-box {
+            text-align: center;
+            padding: 36px;
+            background: linear-gradient(135deg, rgba(100,140,255,0.1), rgba(156,100,255,0.08));
+            border: 1px solid rgba(100,140,255,0.2);
+            border-radius: 16px;
+        }
+        .cta-box h2 { font-size: 24px; margin-bottom: 8px; }
+        .cta-box p { color: #a0a0b0; font-size: 14px; margin-bottom: 20px; }
+        .cta-btn {
+            display: inline-block;
+            background: white;
+            color: #0a0a0c;
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .cta-note {
+            font-size: 11px;
+            color: #a0a0b0;
+            margin-top: 12px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 11px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">AETHER <span>Realty</span></div>
+        <div class="tagline">AI-Powered Lead Qualification</div>
+    </div>
+
+    <h1>Your 24/7 Lead Qualifier.<br>Zero Extra Hires.</h1>
+    <p class="subtitle">An AI assistant that talks to your website visitors, qualifies them by intent, timeline, and budget, and only sends you the hot leads. Built specifically for the Lake Region market.</p>
+
+    <div class="stats-row">
+        <div class="stat">
+            <div class="stat-num">20+</div>
+            <div class="stat-label">Hours/week wasted<br>on cold leads</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">67%</div>
+            <div class="stat-label">Online leads never<br>get a follow-up</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">24/7</div>
+            <div class="stat-label">Your AI agent never<br>sleeps or misses a lead</div>
+        </div>
+    </div>
+
+    <div class="section-title">How It Works</div>
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <h3>Lead Arrives</h3>
+            <p>A buyer visits your site or texts your number. The AI greets them instantly.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <h3>AI Qualifies</h3>
+            <p>Through natural conversation, it extracts intent, budget, timeline, and contact info.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <h3>You Get the Lead</h3>
+            <p>A branded email hits your inbox with the full lead card and conversation transcript.</p>
+        </div>
+    </div>
+
+    <div class="section-title">What You See (Your Buyers Don't)</div>
+    <div class="lead-preview">
+        <h3>📋 Lead Qualification Card — Filled Live by the AI</h3>
+        <div class="lead-row">
+            <span class="lead-label">Intent</span>
+            <span class="lead-val">Buying — Lakefront Property</span>
+        </div>
+        <div class="lead-row">
+            <span class="lead-label">Timeline</span>
+            <span class="lead-val">Within 3 Months</span>
+        </div>
+        <div class="lead-row">
+            <span class="lead-label">Budget</span>
+            <span class="lead-val">$250K — $350K</span>
+        </div>
+        <div class="lead-row">
+            <span class="lead-label">Contact</span>
+            <span class="lead-val">sarah.j@email.com</span>
+        </div>
+        <div class="lead-row">
+            <span class="lead-label">Status</span>
+            <span class="lead-val highlight">✓ QUALIFIED — Ready for Follow-up</span>
+        </div>
+    </div>
+
+    <div class="cta-box">
+        <h2>Free 30-Day Pilot</h2>
+        <p>Try it on your site for a month. Pay nothing. See real qualified leads come in.</p>
+        <a class="cta-btn" href="mailto:contact@aether.systems?subject=Free Pilot — Lake Region AI Agent">Start My Free Pilot →</a>
+        <div class="cta-note">No contracts • No setup fees • Cancel anytime</div>
+    </div>
+
+    <div class="footer">
+        © 2026 Antigravity · AETHER Logic Systems · Powered by Gemini AI
+    </div>
+
+</body>
+</html>

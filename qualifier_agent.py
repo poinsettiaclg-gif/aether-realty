@@ -1,14 +1,8 @@
-import sys
 import os
 import json
 
-# Add Hydra project to path to access AETHER core
-hydra_path = os.environ.get("HYDRA_PATH", r"C:\Users\Poins\OneDrive\Desktop\Projects\auther\hydra")
-if hydra_path not in sys.path:
-    sys.path.append(hydra_path)
-
-from aether.wit import WITSchema
-from agents.base_agent import BaseAgent
+from aether_lite.wit import WITSchema
+from aether_lite.base_agent import BaseAgent
 from google.genai import types
 
 class RealtorQualifierAgent(BaseAgent):
